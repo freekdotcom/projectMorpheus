@@ -89,11 +89,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 150252}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e975b9905dc84b459b044e2daa0851b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c92d71cb5bdeca48baf50b242cbee4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  smoothing: 0
+  target: {fileID: 427910, guid: 80353f6644592164ab9f32c4e945c60d, type: 2}
+  smoothing: 5
 --- !u!124 &12401088
 Behaviour:
   m_ObjectHideFlags: 1
