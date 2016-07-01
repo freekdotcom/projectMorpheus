@@ -12,14 +12,14 @@ public class PlayerHealth : MonoBehaviour {
     public Color flashColor = new Color(1f, 0f, 0f, 0.1f);
 
     private Animator anim;
-    private Movement movement;
+    private PlayerMovement movement;
     private bool damaged;
     private bool isDead;
 
 	// Use this for initialization
 	void Awake () {
         //Getting the compoments
-        movement = GetComponent<Movement>();
+        movement = GetComponent<PlayerMovement>();
 
         //set the initial health of the player
         currentHealth = startingHealth;

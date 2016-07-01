@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Movement : MonoBehaviour {
+public class PlayerMovement
+     : MonoBehaviour {
 
     private Rigidbody rigidBody;
     private float horizontalMovementSpeed;
