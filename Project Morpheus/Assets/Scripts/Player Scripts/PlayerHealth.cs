@@ -68,6 +68,6 @@ public class PlayerHealth : MonoBehaviour {
     {
         isDead = true;
         movement.enabled = false;
-
+        GetComponent<PlayerAttackManager>().enabled = false;
     }
 }

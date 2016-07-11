@@ -10,6 +10,8 @@ public class EnemyAttackManager : MonoBehaviour
     private Animator anim;
     private GameObject player;
     private PlayerHealth playerHealth;
+    private PlayerAttackManager playerAttack;
+    private EnemyHealth enemyHealth;
     private bool playerInRange;
     private float timer;
 
@@ -18,6 +20,8 @@ public class EnemyAttackManager : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("TestPlayer");
         playerHealth = player.GetComponent<PlayerHealth>();
+        playerAttack = player.GetComponent<PlayerAttackManager>();
+        enemyHealth = GetComponent<EnemyHealth>();
         anim = GetComponent<Animator>();
     }
 
@@ -29,6 +33,12 @@ public class EnemyAttackManager : MonoBehaviour
         {
             Debug.Log("player detected");
             playerInRange = true;
+        }
+
+        if(other.gameObject.tag == "Bullet")
+        {
+            Debug.Log("Took damage");
+            enemyHealth.takeDamage(playerAttack.GetDamagePerShot());
         }
     }
 
@@ -47,8 +57,7 @@ public class EnemyAttackManager : MonoBehaviour
 
         //If the player is in Range, the timer exceeds the time between attacks and this enemy is alive
         //TODO: add enemy health to this
-        Debug.Log(playerInRange);
-        if (timer >= timeBetweenAttacks && playerInRange)
+        if (timer >= timeBetweenAttacks && playerInRange && enemyHealth.currentHealth > 0)
         {
             //The enemy can attack
             Attack();

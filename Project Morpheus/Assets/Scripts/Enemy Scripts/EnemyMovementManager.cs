@@ -5,12 +5,14 @@ public class EnemyMovementManager : MonoBehaviour {
 
     Transform player;
     PlayerHealth playerHealth;
+    EnemyHealth enemyHealth;
     NavMeshAgent nav;
 
 	// Use this for initialization
 	void Awake () {
         player = GameObject.FindGameObjectWithTag("TestPlayer").transform;
         playerHealth = player.GetComponent<PlayerHealth>();
+        enemyHealth = GetComponent<EnemyHealth>();
         nav = GetComponent<NavMeshAgent>();
 	}
 	
@@ -18,7 +20,7 @@ public class EnemyMovementManager : MonoBehaviour {
 	void Update () {
 	    
         //If the player has health left
-        if(playerHealth.currentHealth > 0)
+        if(playerHealth.currentHealth > 0 || enemyHealth.currentHealth > 0)
         {
             //Set the destination towards the player
             nav.SetDestination(player.position);

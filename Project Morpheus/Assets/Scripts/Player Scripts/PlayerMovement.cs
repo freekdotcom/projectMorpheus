@@ -11,7 +11,7 @@ public class PlayerMovement
     private Vector3 movement;
     private float distToGround;
 
-
+    public int mouseRotationSpeed;
     public float speed;
 
 	// Use this for initialization
@@ -22,13 +22,24 @@ public class PlayerMovement
 
     }
 
+    void Update()
+    {
+        transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X"), 0) * Time.deltaTime * mouseRotationSpeed);
+    }
+
     // Update is called once per frame
     void FixedUpdate () {
+
+
         //Handles the movement
         horizontalMovementSpeed = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
         verticalMovementSpeed = Input.GetAxis("Vertical") * speed * Time.deltaTime;
-        rigidBody.AddRelativeForce(horizontalMovementSpeed * -speed, 0, verticalMovementSpeed * -speed, ForceMode.Impulse);
 
+        transform.Translate(new Vector3(horizontalMovementSpeed * -speed, 0, verticalMovementSpeed * -speed));
+
+        //rigidBody.AddRelativeForce(horizontalMovementSpeed * -speed, 0, verticalMovementSpeed * -speed, ForceMode.Impulse);
+
+        Debug.Log(IsGrounded());
         //Handles the jumping
         if(Input.GetKeyDown("space") && IsGrounded())
         {
