@@ -13,15 +13,13 @@ public class PlayerAttackManager : MonoBehaviour {
     //For reloading the gun
     public int ammo;
     private int bulletType = 0;
+    private float reloadTime;
+    private float canReload;
     private bool reloading;
 
     private float timer;
     private Ray shootRay;
     private RaycastHit shootHit;
-    private int shootableMask;
-    private ParticleSystem gunParticles;
-    private LineRenderer gunLine;
-    private Light gunLight;
     public GameObject[] bulletPrefabs;
     public Transform transform;
     private float effectsDislpayTime = 0.2f;
@@ -66,18 +64,26 @@ public class PlayerAttackManager : MonoBehaviour {
         return bulletSpeed;
     }
 
+    public void SetReloadTime(float reloadTime)
+    {
+        this.reloadTime = reloadTime;
+    }
+
+    public float GetReloadTime()
+    {
+        return reloadTime;
+    }
+
 	// Use this for initialization
 	void Awake () {
-        shootableMask = LayerMask.GetMask("shootable");
-        gunParticles = GetComponent<ParticleSystem>();
-        gunLine = GetComponent<LineRenderer>();
-        gunLight = GetComponent<Light>();
         SetTimeBetweenShots(GetTimeBetweenShots());
     }
 	
 	// Update is called once per frame
 	void Update () {
         timer += Time.deltaTime;
+        canReload += Time.deltaTime;
+
         //Make sure that the player can't reload multiple times
         //If the fire button is pressed and the timer allows for shooting
         if (Input.GetButtonDown("Fire1") && timer >= timeBetweenShots && ammo > 0)
@@ -89,36 +95,18 @@ public class PlayerAttackManager : MonoBehaviour {
         if(timer >= timeBetweenShots * effectsDislpayTime)
         {
             //Disable any effects when the timer has exeeded the other objects
-            DisableEffects();
         }
 
-        if(Input.GetButtonDown("Reload") && ammo == 0)
+        if(Input.GetButtonDown("Reload") && ammo == 0 )
         {
-            Reload();
+            StartCoroutine(Reload());
         }
 	}
-
-    private void DisableEffects()
-    {
-        //Disables the shoot stuff
-        gunLine.enabled = false;
-        gunLight.enabled = false;
-    }
 
     private void Shoot()
     {
         timer = 0f;
-        //TODO: remove this line
-        SetRange(GetRange());
-        gunLight.enabled = true;
-       
-        //Allows to create the gun particles
-        gunParticles.Stop();
-        gunParticles.Play();
-
-        //Enables the line renderer and sets the position of the gunline at the barrel of the gun
-        gunLine.enabled = true;
-        gunLine.SetPosition(0, base.transform.position);
+        canReload = 0f;
 
         //Sets the origin and the direction of the shootray
         shootRay.origin = base.transform.position;
@@ -134,16 +122,21 @@ public class PlayerAttackManager : MonoBehaviour {
         Debug.Log("bulletspeed: " + GetBulletSpeed());
         bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * GetBulletSpeed();
 
-        Destroy(bullet, 6.0f);
+        if (bulletPrefabs[bulletType].transform.position.x > Screen.width || bulletPrefabs[bulletType].transform.position.z > Screen.height)
+        {
+            Destroy(bullet, 5.0f);
+        }
 
         bulletType += 1;
         ammo -= 1;
     }
 
-    private void Reload()
+    private IEnumerator Reload()
     {
+        yield return new WaitForSeconds(GetReloadTime());
+        reloading = true;
         bulletType = 0;
-        ammo = 3;
+        ammo = bulletPrefabs.Length;
     }
 
 

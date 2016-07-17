@@ -16,18 +16,29 @@ public class PlayerHealth : MonoBehaviour {
     private bool damaged;
     private bool isDead;
 
+    public void SetStartingHealth(int startingHealth)
+    {
+        this.startingHealth = startingHealth;
+        currentHealth = startingHealth;
+        healthSlider.value = startingHealth;
+    }
+
+    public int GetStartingHealth()
+    {
+        return startingHealth;
+    }
+
 	// Use this for initialization
 	void Awake () {
         //Getting the compoments
         movement = GetComponent<PlayerMovement>();
+        healthSlider.value = currentHealth;
+    }
 
-        //set the initial health of the player
-        currentHealth = startingHealth;
+    // Update is called once per frame
+    void Update () {
+        Debug.Log("HealthSlider value: " + healthSlider.value);
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
         //Checks if the player is damaged
         if (damaged)
         {
@@ -37,6 +48,7 @@ public class PlayerHealth : MonoBehaviour {
         {
             damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
         }
+
 	}
 
     /*
@@ -59,6 +71,19 @@ public class PlayerHealth : MonoBehaviour {
             //Death has begun
             Death();
         }
+    }
+    /*
+    Method that heals any damage
+    */
+    public void healDamage(int amount)
+    {
+        //Increases the health
+        currentHealth += amount;
+
+        //Changes the healthbar value
+        healthSlider.value = currentHealth;
+
+        damaged = false;
     }
 
     /*

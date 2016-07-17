@@ -6,7 +6,6 @@ public class TestBulletManager : MonoBehaviour {
     public GameObject Bullet;
 
     public int range;
-    public float timeBetweenShots;
     public int damage;
     public int bulletSpeed;
 
@@ -18,7 +17,6 @@ public class TestBulletManager : MonoBehaviour {
         playerAttack = player.GetComponent<PlayerAttackManager>();
 
         playerAttack.SetDamagePerShot(damage);
-        playerAttack.SetTimeBetweenShots(timeBetweenShots);
         playerAttack.SetRange(range);
         playerAttack.SetBulletSpeed(bulletSpeed);
     }
@@ -29,5 +27,10 @@ public class TestBulletManager : MonoBehaviour {
         {
             Destroy(Bullet);
         }
+    }
+
+    void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 }

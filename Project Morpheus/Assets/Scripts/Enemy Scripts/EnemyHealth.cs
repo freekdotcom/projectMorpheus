@@ -14,6 +14,8 @@ public class EnemyHealth : MonoBehaviour {
     private ParticleSystem hitParticiles;
     private CapsuleCollider capsuleCollider;
     private bool isDead;
+    private GameObject player;
+    private PlayerExperienceAndLevelsManager xpManager;
 
 	// Use this for initialization
 	void Awake () {
@@ -21,11 +23,14 @@ public class EnemyHealth : MonoBehaviour {
         hitParticiles = GetComponentInChildren<ParticleSystem>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         currentHealth = startingHealth;
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+        player = GameObject.FindGameObjectWithTag("TestPlayer");
+        xpManager = player.GetComponent<PlayerExperienceAndLevelsManager>();
+
+    }
+
+    // Update is called once per frame
+    void Update () {
         Debug.Log("Enemy current health: " + currentHealth);
 	}
 
@@ -57,6 +62,7 @@ public class EnemyHealth : MonoBehaviour {
         //Now it can no longer be hit
         capsuleCollider.isTrigger = true;
 
+        xpManager.GainExperience(110);
         GetComponent<NavMeshAgent>().enabled = false;
         GetComponent<EnemyHealth>().enabled = false;
         Destroy(gameObject, 1f);

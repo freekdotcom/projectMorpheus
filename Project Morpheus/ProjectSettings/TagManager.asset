@@ -6,6 +6,20 @@ TagManager:
   tags:
   - TestPlayer
   - Bullet
+  - Potion
+  - Slot
+  - Slots
+  - EquipmentSystem
+  - EventSystem
+  - Tooltip
+  - ResultSlot
+  - Canvas
+  - CraftSystem
+  - DraggingItem
+  - Panel
+  - Item
+  - ItemIcon
+  - MainInventory
   layers:
   - Default
   - TransparentFX
