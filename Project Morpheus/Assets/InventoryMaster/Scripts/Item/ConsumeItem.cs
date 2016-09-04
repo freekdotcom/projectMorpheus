@@ -165,6 +165,9 @@ public class ConsumeItem : MonoBehaviour, IPointerDownHandler
                             tooltip.deactivateTooltip();
                         inventory.deleteItemFromInventory(item);
                         Destroy(this.gameObject);                        
+                    } else if(item.itemValue <= 0 && this.gameObject.CompareTag("HealingItem"))
+                    {
+
                     }
 
                 }

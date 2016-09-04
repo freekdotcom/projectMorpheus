@@ -18,12 +18,12 @@ public class CoreItemManager : MonoBehaviour {
     private int id;
     private ITEM_TYPE itemType;
 
-    public void setId(int id)
+    public void SetId(int id)
     {
         this.id = id;
     }
 
-    public int getId()
+    public int GetId()
     {
         return id;
     }

@@ -26,3 +26,15 @@ MonoBehaviour:
     attributeValue: 0
   - attributeName: Leech
     attributeValue: 0
+  - attributeName: 
+    attributeValue: 0
+  - attributeName: Health
+    attributeValue: 0
+  - attributeName: 
+    attributeValue: 0
+  - attributeName: 
+    attributeValue: 0
+  - attributeName: ShotTime
+    attributeValue: 0
+  - attributeName: ReloadTime
+    attributeValue: 0

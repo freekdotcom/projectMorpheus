@@ -4,14 +4,14 @@ using System.Collections;
 public class EnemyMovementManager : MonoBehaviour {
 
     Transform player;
-    PlayerHealth playerHealth;
+    PlayerHealthManager playerHealth;
     EnemyHealth enemyHealth;
     NavMeshAgent nav;
 
 	// Use this for initialization
 	void Awake () {
         player = GameObject.FindGameObjectWithTag("TestPlayer").transform;
-        playerHealth = player.GetComponent<PlayerHealth>();
+        playerHealth = player.GetComponent<PlayerHealthManager>();
         enemyHealth = GetComponent<EnemyHealth>();
         nav = GetComponent<NavMeshAgent>();
 	}

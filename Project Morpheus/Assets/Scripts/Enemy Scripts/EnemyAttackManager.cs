@@ -9,7 +9,7 @@ public class EnemyAttackManager : MonoBehaviour
 
     private Animator anim;
     private GameObject player;
-    private PlayerHealth playerHealth;
+    private PlayerHealthManager playerHealth;
     private PlayerAttackManager playerAttack;
     private EnemyHealth enemyHealth;
     private bool playerInRange;
@@ -18,8 +18,8 @@ public class EnemyAttackManager : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("TestPlayer");
-        playerHealth = player.GetComponent<PlayerHealth>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerHealth = player.GetComponent<PlayerHealthManager>();
         playerAttack = player.GetComponent<PlayerAttackManager>();
         enemyHealth = GetComponent<EnemyHealth>();
         anim = GetComponent<Animator>();

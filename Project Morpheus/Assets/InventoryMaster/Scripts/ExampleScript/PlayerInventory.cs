@@ -35,6 +35,19 @@ public class PlayerInventory : MonoBehaviour
 
     int normalSize = 3;
 
+    private GameObject player;
+    private PlayerHealthManager playerHealth;
+    private GunManager gunManager;
+
+    int somethingIsEquiped = 0;
+
+    void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerHealth = player.GetComponent<PlayerHealthManager>();
+        gunManager = player.GetComponentInChildren<GunManager>();
+    }
+
     public void OnEnable()
     {
         Inventory.ItemEquip += OnBackpack;
@@ -66,6 +79,14 @@ public class PlayerInventory : MonoBehaviour
         if (item.itemType == ItemType.Weapon)
         {
             //add the weapon if you unequip the weapon
+            somethingIsEquiped = item.itemID;
+            int reloadTime, timeBetweenShots;
+
+            reloadTime = item.itemAttributes[0].attributeValue;
+            timeBetweenShots = item.itemAttributes[1].attributeValue;
+
+            gunManager.TransformEquippedItem(reloadTime, timeBetweenShots);
+
         }
     }
 
@@ -73,7 +94,7 @@ public class PlayerInventory : MonoBehaviour
     {
         if (item.itemType == ItemType.Weapon)
         {
-            //delete the weapon if you unequip the weapon
+            
         }
     }
 
@@ -207,38 +228,39 @@ public class PlayerInventory : MonoBehaviour
         {
             if (item.itemAttributes[i].attributeName == "Health")
             {
-                if ((currentHealth + item.itemAttributes[i].attributeValue) > maxHealth)
-                    currentHealth = maxHealth;
-                else
-                    currentHealth += item.itemAttributes[i].attributeValue;
+                if ((playerHealth.GetCurrentHealth() + item.itemAttributes[i].attributeValue) <= playerHealth.GetMaximumHealth())
+                    playerHealth.healDamage(item.itemAttributes[i].attributeValue);
+                else {
+                    //currentHealth += item.itemAttributes[i].attributeValue;
+                }
+                if (item.itemAttributes[i].attributeName == "Mana")
+                {
+                    if ((currentMana + item.itemAttributes[i].attributeValue) > maxMana)
+                        currentMana = maxMana;
+                    else
+                        currentMana += item.itemAttributes[i].attributeValue;
+                }
+                if (item.itemAttributes[i].attributeName == "Armor")
+                {
+                    if ((currentArmor + item.itemAttributes[i].attributeValue) > maxArmor)
+                        currentArmor = maxArmor;
+                    else
+                        currentArmor += item.itemAttributes[i].attributeValue;
+                }
+                if (item.itemAttributes[i].attributeName == "Damage")
+                {
+                    if ((currentDamage + item.itemAttributes[i].attributeValue) > maxDamage)
+                        currentDamage = maxDamage;
+                    else
+                        currentDamage += item.itemAttributes[i].attributeValue;
+                }
             }
-            if (item.itemAttributes[i].attributeName == "Mana")
-            {
-                if ((currentMana + item.itemAttributes[i].attributeValue) > maxMana)
-                    currentMana = maxMana;
-                else
-                    currentMana += item.itemAttributes[i].attributeValue;
-            }
-            if (item.itemAttributes[i].attributeName == "Armor")
-            {
-                if ((currentArmor + item.itemAttributes[i].attributeValue) > maxArmor)
-                    currentArmor = maxArmor;
-                else
-                    currentArmor += item.itemAttributes[i].attributeValue;
-            }
-            if (item.itemAttributes[i].attributeName == "Damage")
-            {
-                if ((currentDamage + item.itemAttributes[i].attributeValue) > maxDamage)
-                    currentDamage = maxDamage;
-                else
-                    currentDamage += item.itemAttributes[i].attributeValue;
-            }
+            //if (HPMANACanvas != null)
+            //{
+            //    UpdateManaBar();
+            //    UpdateHPBar();
+            //}
         }
-        //if (HPMANACanvas != null)
-        //{
-        //    UpdateManaBar();
-        //    UpdateHPBar();
-        //}
     }
 
     public void OnGearItem(Item item)
@@ -302,6 +324,7 @@ public class PlayerInventory : MonoBehaviour
 
         if (Input.GetKeyDown(inputManagerDatabase.InventoryKeyCode))
         {
+            FreezeTime(0);
             if (!inventory.activeSelf)
             {
                 mainInventory.openInventory();
@@ -310,7 +333,9 @@ public class PlayerInventory : MonoBehaviour
             {
                 if (toolTip != null)
                     toolTip.deactivateTooltip();
+                
                 mainInventory.closeInventory();
+                FreezeTime(1);
             }
         }
 
@@ -329,5 +354,11 @@ public class PlayerInventory : MonoBehaviour
         }
 
     }
+    //Method that freezes all the interactions that the player can do in an normal state
+    void FreezeTime(int timeScaleNumber)
+    {
+        //playerHealth.enabled = false;
+        Time.timeScale = timeScaleNumber;
+    } 
 
 }

@@ -1,24 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HealingItemsManager : CoreItemManager {
+public class HealingItemsManager : CoreItemManager
+{
+    static ItemDataBaseList inventoryItemList;
 
-    public int healDamage;
-
-    private GameObject player;
-    private PlayerHealth playerHealth;
     // Use this for initialization
-    void Start () {
-        player = GameObject.FindGameObjectWithTag("TestPlayer");
-        playerHealth = player.GetComponent<PlayerHealth>();
-        setId(1);
+    void Awake()
+    {
+        SetId(1);
+        inventoryItemList = (ItemDataBaseList)Resources.Load("ItemDatabase");
+        MakeItemPickUp();
     }
 
-    void OnCollisionEnter(Collision other)
+    void MakeItemPickUp()
     {
-        if (other.gameObject.CompareTag("TestPlayer"))
-        {
-            Destroy(gameObject);
+        {            
+            PickUpItem item = gameObject.AddComponent<PickUpItem>();
+            item.item = inventoryItemList.itemList[GetId()];
         }
     }
+
 }

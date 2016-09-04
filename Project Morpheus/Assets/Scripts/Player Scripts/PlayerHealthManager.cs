@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class PlayerHealth : MonoBehaviour {
+public class PlayerHealthManager : MonoBehaviour {
 
     public int startingHealth;
     public int currentHealth;
@@ -15,6 +15,7 @@ public class PlayerHealth : MonoBehaviour {
     private PlayerMovement movement;
     private bool damaged;
     private bool isDead;
+    private float maximumHealth;
 
     public void SetStartingHealth(int startingHealth)
     {
@@ -28,11 +29,22 @@ public class PlayerHealth : MonoBehaviour {
         return startingHealth;
     }
 
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    public float GetMaximumHealth()
+    {
+        return healthSlider.maxValue;
+    }
+
 	// Use this for initialization
 	void Awake () {
         //Getting the compoments
         movement = GetComponent<PlayerMovement>();
         healthSlider.value = currentHealth;
+        maximumHealth = healthSlider.maxValue;
     }
 
     // Update is called once per frame

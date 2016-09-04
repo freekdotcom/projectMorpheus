@@ -20,6 +20,8 @@ TagManager:
   - Item
   - ItemIcon
   - MainInventory
+  - Timer
+  - Gun
   layers:
   - Default
   - TransparentFX

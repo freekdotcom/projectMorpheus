@@ -11,15 +11,13 @@ public class PlayerExperienceAndLevelsManager : MonoBehaviour {
 
     private int Level = 1;
     private GameObject player;
-    private PlayerHealth playerHealth;
-    private GunManager gunManager;
-    
+    private PlayerHealthManager playerHealth;    
 
 	// Use this for initialization
 	void Awake () {
 
-        player = GameObject.FindGameObjectWithTag("TestPlayer");
-        playerHealth = player.GetComponent<PlayerHealth>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerHealth = player.GetComponent<PlayerHealthManager>();
 
         experienceSlider.value = 0;
 

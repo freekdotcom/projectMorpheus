@@ -14,6 +14,8 @@ public class PlayerMovement
     public int mouseRotationSpeed;
     public float speed;
 
+    public bool canMove;
+
 	// Use this for initialization
 	void Start () {
         rigidBody = GetComponent<Rigidbody>();

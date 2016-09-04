@@ -47,8 +47,6 @@ public class DragItem : MonoBehaviour, IDragHandler, IPointerDownHandler, IEndDr
         inventory.OnUpdateItemList();
     }
 
-
-
     public void OnPointerDown(PointerEventData data)
     {
         if (data.button == PointerEventData.InputButton.Left)
@@ -602,7 +600,7 @@ public class DragItem : MonoBehaviour, IDragHandler, IPointerDownHandler, IEndDr
 
             }
 
-            else
+           else
             {
                 GameObject dropItem = (GameObject)Instantiate(GetComponent<ItemOnObject>().item.itemModel);
                 dropItem.AddComponent<PickUpItem>();
@@ -613,7 +611,7 @@ public class DragItem : MonoBehaviour, IDragHandler, IPointerDownHandler, IEndDr
                     inventory.GetComponent<Inventory>().UnEquipItem1(dropItem.GetComponent<PickUpItem>().item);
                 Destroy(this.gameObject);
 
-            }
+            } 
         }
         inventory.OnUpdateItemList();
     }

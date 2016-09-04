@@ -52,7 +52,7 @@ GameObject:
   - 114: {fileID: 11447672}
   m_Layer: 0
   m_Name: PlayerTestModelV2
-  m_TagString: TestPlayer
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -192,6 +192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeBetweenShots: 0.5
   reloadTime: 3
+  damageMultiplier: 1.2
 --- !u!114 &11422466
 MonoBehaviour:
   m_ObjectHideFlags: 1
